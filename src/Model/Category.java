@@ -41,13 +41,15 @@ public class Category implements Serializable {
     }
 
 
+    public String getCategoryID() {
+        return Integer.toString(categoryID);
+    }
+
     public String getCategoryName() {
         return categoryName;
     }
 
     public ArrayList<Category> getSubCategories() { return subCategories; }
-
-
 
 
     public void AddSubCategory(String categoryName, User user, Category parentCategory)
@@ -58,23 +60,6 @@ public class Category implements Serializable {
         System.out.println("Subcategory " + categoryName + " is successfully created.");
         categoryTimers.captureTimeOfModification();
     }
-/*
-    public void RemoveSubCategory(String categoryName)
-    {
-        try
-        {
-            subCategories.remove(CategoryController.findCategoryIndex(categoryName,subCategories));
-
-            System.out.println("Category " + categoryName + " is successfully removed.\t");
-            categoryTimers.captureTimeOfModification();
-        }
-        catch (IndexOutOfBoundsException e)
-        {
-            System.out.println("Such category doesn't exist. \t");
-        }
-    }
-*/
-
 
     public float getOverallFinances()
     {
@@ -138,6 +123,10 @@ public class Category implements Serializable {
     private void AddToExpenses(Payment payment) {
         expense.add(payment);
         categoryTimers.captureTimeOfModification();
+    }
+
+    public Time getCategoryTimers() {
+        return categoryTimers;
     }
 
     public String getDetails() {

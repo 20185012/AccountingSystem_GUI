@@ -14,6 +14,16 @@ public class SystemRoot implements Serializable{
     private final ArrayList<User> users;
     //ArrayList<User> currentUsers;
 
+
+    public SystemRoot(String companyName)
+    {
+        this.companyName = companyName;
+        this.systemInitialDate = LocalDateTime.now();
+        rootCategories = new ArrayList<Category>();
+        users = new ArrayList<User>();
+    }
+
+
     public ArrayList<User> getAllUsers() {
         return users;
     }
@@ -22,12 +32,12 @@ public class SystemRoot implements Serializable{
         return rootCategories;
     }
 
-    public SystemRoot(String companyName)
-    {
-        this.companyName = companyName;
-        this.systemInitialDate = LocalDateTime.now();
-        rootCategories = new ArrayList<Category>();
-        users = new ArrayList<User>();
+    public LocalDateTime getSystemInitialDate() {
+        return systemInitialDate;
+    }
+
+    public String getCompanyName() {
+        return companyName;
     }
 
     public String getDetails() {

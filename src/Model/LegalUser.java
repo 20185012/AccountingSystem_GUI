@@ -4,13 +4,52 @@ public class LegalUser extends User {
 
     String address;
     String companyCode;
-    String userType = "LegalUser";
+    UserType userType;
 
-    public LegalUser(String name, String address, String email, String phone, String companyCode, String loginName, String loginPassword) {
-        super(name, email, phone, loginName, loginPassword);
+    public LegalUser(String name, String email, String phone, String loginName, String loginPassword, String address, String companyCode, UserType userType) {
+        super(name, email, phone, loginName, loginPassword, userType);
         this.address = address;
         this.companyCode = companyCode;
+        this.userType = userType;
     }
+
+
+    @Override
+    public String getSurname() {
+        return null;
+    }
+
+    @Override
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    @Override
+    public String getAddress() {
+        return address;
+    }
+
+
+
+    @Override
+    public void setSurname(String surname) {
+
+    }
+
+
+
+    @Override
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    @Override
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+
+
 
     @Override
     public String UserDetails() {

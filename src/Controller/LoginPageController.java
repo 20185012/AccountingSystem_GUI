@@ -3,6 +3,7 @@ package Controller;
 import Model.IndividualUser;
 import Model.SystemRoot;
 import Model.User;
+import Model.UserType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,7 +60,6 @@ public class LoginPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     public void validateUser(ActionEvent actionEvent) throws IOException {
@@ -96,8 +96,7 @@ public class LoginPageController implements Initializable {
         Parent root = loader.load();
 
         SystemRootPageController systemRootPageController = loader.getController();
-        systemRootPageController.setSystemRoot(systemRoot);
-        systemRootPageController.setUser(user);
+        systemRootPageController.setSystemRoot(systemRoot, user);
 
         Stage stage = (Stage) loginBtn.getScene().getWindow();
 
@@ -112,7 +111,7 @@ public class LoginPageController implements Initializable {
                                                     "someEmail",
                                                    "+37068789528",
                                                           usernameTextFieldRegister.getText(),
-                                                          passwordFieldRegister.getText());
+                                                          passwordFieldRegister.getText(), UserType.Individual);
 
             systemRoot.getAllUsers().add(userBeingRegistered);
             registerPrompt.setText("User " + userBeingRegistered.getLoginName() + " successfully signed up.");

@@ -14,15 +14,16 @@ public abstract class User implements Serializable {
     protected String loginName;
     protected String loginPassword;
     //ArrayList<Category> categoriesResponsible;
-    boolean active;
+    protected UserType userType;
 
-    public User(String name, String email, String phone, String loginName, String loginPassword) {
+    public User(String name, String email, String phone, String loginName, String loginPassword, UserType userType) {
         this.userID = Integer.toString(userIDGenerator++);
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.loginName = loginName;
         this.loginPassword = loginPassword;
+        this.userType = userType;
     }
 
     public String getLoginName() {
@@ -37,6 +38,20 @@ public abstract class User implements Serializable {
 
     public String getName() { return name; }
 
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+
     public String getEmail() { return email; }
 
     public String getPhone() { return phone; }
@@ -50,6 +65,25 @@ public abstract class User implements Serializable {
     public void setLoginPassword(String loginPassword) {
         this.loginPassword = loginPassword;
     }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+
+
+
+    public abstract String getSurname();
+
+    public abstract String getCompanyCode();
+
+    public abstract String getAddress();
+
+    public abstract void setSurname(String surname);
+
+    public abstract void setCompanyCode(String companyCode);
+
+    public abstract void setAddress(String address);
 
     public abstract String UserDetails();
 }
