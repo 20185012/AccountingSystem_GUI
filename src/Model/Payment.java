@@ -26,4 +26,12 @@ public class Payment implements Serializable {
     {
         System.out.println("Sum: " + this.paymentSum.getAmount() + "  Transaction Date: " + this.paymentDate);
     }
+
+    public Money getPaymentSum() {
+        return paymentSum;
+    }
+
+    public LocalDate getPaymentDate() {
+        return paymentDate;
+    }
 }

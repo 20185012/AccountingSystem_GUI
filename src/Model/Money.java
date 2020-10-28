@@ -64,4 +64,9 @@ public class Money implements Serializable {
     {
         this.amount -= money.getAmount();
     }
+
+    @Override
+    public String toString() {
+        return Float.toString(amount);
+    }
 }

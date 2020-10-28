@@ -41,9 +41,20 @@ public class SystemRootPageController implements Initializable {
         this.systemRoot = systemRoot;
         setUser(user);
         populateRootCategoriesListWithData();
+        populateUsersList();
         systemCreatedLabel.setText("System created: \n" + systemRoot.getSystemInitialDate().toString());
         systemNameLabel.setText(systemRoot.getCompanyName());
         currentUserLabel.setText("Current user: " + user.getName());
+    }
+
+    private void populateUsersList() {
+        systemRoot.
+                getAllUsers().
+                forEach
+                        (user ->
+                                allUsersList.getItems().
+                                        add
+                                                (user.getUserID()+ ": " + user.getName()));
     }
 
     public User getUser() {
@@ -57,10 +68,10 @@ public class SystemRootPageController implements Initializable {
 
 
     private User getSelectedUser() {
-        String userData = allUsersList.getSelectionModel().getSelectedItem().toString();
+        String[] userData = allUsersList.getSelectionModel().getSelectedItem().toString().split(": ");
 
         //for (int i = 0;i<userData.length;i++) System.out.println(userData[i]);
-        User userToShow = systemRoot.getAllUsers().stream().filter(user -> user.getUserID().equals(userData)).findFirst().orElse(null);
+        User userToShow = systemRoot.getAllUsers().stream().filter(user -> user.getUserID().equals(userData[0])).findFirst().orElse(null);
 
         return userToShow;
     }
@@ -91,8 +102,10 @@ public class SystemRootPageController implements Initializable {
         if (userToEdit != null)
         {
             userManagementFormController.setUserBeingEdited(userToEdit);
+            userManagementFormController.setCurrentUser(user);
+            userManagementFormController.setSystemRoot(systemRoot);
 
-            Stage stage = (Stage) manageUsersBtn.getScene().getWindow();
+            Stage stage = (Stage) manageUserBtn.getScene().getWindow();
 
             stage.setTitle("Accounting system");
             stage.setScene(new Scene(root));
@@ -150,15 +163,22 @@ public class SystemRootPageController implements Initializable {
         CategoryManagementFormController categoryManagementFormController = loader.getController();
 
 
-        categoryManagementFormController.setCurrentCategory(getSelectedCategory(rootCategoriesList.getSelectionModel(),systemRoot.getRootCategories()), user);
+        Category categoryToAccess = getSelectedCategory(rootCategoriesList.getSelectionModel(),systemRoot.getRootCategories());
 
-        categoryManagementFormController.setUser(user);
+        if (categoryToAccess != null) {
+            categoryManagementFormController.setCurrentCategory(categoryToAccess, user);
+            categoryManagementFormController.setSystemRoot(systemRoot);
+
+            System.out.println(systemRoot);
+
+            categoryManagementFormController.setUser(user);
 
 
-        Stage stage = (Stage) accessSelectedRootCategoryBtn.getScene().getWindow();
+            Stage stage = (Stage) accessSelectedRootCategoryBtn.getScene().getWindow();
 
-        stage.setTitle("Accounting system");
-        stage.setScene(new Scene(root));
-        stage.show();
+            stage.setTitle("Accounting system");
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
     }
 }

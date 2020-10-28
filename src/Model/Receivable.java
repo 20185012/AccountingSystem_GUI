@@ -26,4 +26,12 @@ public class Receivable implements Serializable {
     {
         System.out.println("Sum: " + this.receivableSum.getAmount() + " Transaction date: " + this.receivableDate);
     }
+
+    public Money getReceivableSum() {
+        return receivableSum;
+    }
+
+    public LocalDate getReceivableDate() {
+        return receivableDate;
+    }
 }

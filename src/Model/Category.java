@@ -40,6 +40,21 @@ public class Category implements Serializable {
         categoryTimers = Time.startCountingTime();
     }
 
+    public ArrayList<User> getResponsibleUsers() {
+        return responsibleUsers;
+    }
+
+    public Category getParentCategory() {
+        return parentCategory;
+    }
+
+    public ArrayList<Receivable> getIncome() {
+        return income;
+    }
+
+    public ArrayList<Payment> getExpense() {
+        return expense;
+    }
 
     public String getCategoryID() {
         return Integer.toString(categoryID);
@@ -66,12 +81,9 @@ public class Category implements Serializable {
         return overallFinances.getAmount();
     }
 
-    public void BuySomething()
+    public void BuySomething(float moneyAmount)
     {
-        System.out.println("How much this thing costs?");
-
-        Money price = new Money(Money.SpecifyPrice());
-
+        Money price = new Money(moneyAmount);
         Payment payment = Payment.MakeNewPayment(price);
 
         AddToExpenses(payment);
@@ -92,11 +104,11 @@ public class Category implements Serializable {
     }
 
 
-    public void SellSomething()
+    public void SellSomething(float amount)
     {
         System.out.println("How much this thing costs?");
 
-        Money price =  new Money(Money.SpecifyPrice());
+        Money price =  new Money(amount);
 
         Receivable receivable = Receivable.MakeNewReceivable(price);
 

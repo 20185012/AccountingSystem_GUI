@@ -1,13 +1,19 @@
 package Controller;
 
+import Model.SystemRoot;
 import Model.User;
 import Model.UserType;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -40,9 +46,13 @@ public class UserManagementFormController implements Initializable {
     public Button phoneConfirmBtn;
 
 
+    public Button goBackBtn;
+
 
     private User currentUser;
     private User userBeingEdited;
+    private SystemRoot systemRoot;
+
 
 
 
@@ -119,42 +129,35 @@ public class UserManagementFormController implements Initializable {
         userLabel.setText("User: " + user.getName());
     }
 
-
-
+    public void setSystemRoot(SystemRoot systemRoot) {
+        this.systemRoot = systemRoot;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
-/*
-    private User getSelectedUser() {
-        String[] userData = userList.getSelectionModel().getSelectedItem().toString().split(": ");
 
-        //for (int i = 0;i<userData.length;i++) System.out.println(userData[i]);
-        User userToShow = users.stream().filter(user -> user.getUserID().equals(userData[0])).findFirst().orElse(null);
+    private void loadMainWindow(User user) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/SystemRootPage.fxml"));
 
-        return userToShow;
+        Parent root = loader.load();
+
+        SystemRootPageController systemRootPageController = loader.getController();
+        systemRootPageController.setSystemRoot(systemRoot, user);
+
+        Stage stage = (Stage) goBackBtn.getScene().getWindow();
+
+        stage.setTitle("Accounting system");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
-*/
-    /*
-    private void populateUsersListWithData() {
-        userList.getItems().clear();
 
-        users.add( new IndividualUser("exampleName","ExampleSurname","example@example.lt","+37045645654","dsadsad","dsadwsad"));
-        users.add( new IndividualUser("exampleName","ExampleSurname","example@example.lt","+37045645654","dsadsad","dsadwsad"));
-        users.add( new IndividualUser("exampleName","ExampleSurname","example@example.lt","+37045645654","dsadsad","dsadwsad"));
-        users.add( new IndividualUser("exampleName","ExampleSurname","example@example.lt","+37045645654","dsadsad","dsadwsad"));
-        users.add( new IndividualUser("exampleName","ExampleSurname","example@example.lt","+37045645654","dsadsad","dsadwsad"));
-        users.add( new IndividualUser("exampleName","ExampleSurname","example@example.lt","+37045645654","dsadsad","dsadwsad"));
-        users.add( new IndividualUser("exampleName","ExampleSurname","example@example.lt","+37045645654","dsadsad","dsadwsad"));
-
-        if (users.size() > 0)
-        {
-            users.forEach(user -> userList.getItems().add(user.getUserID() + ": " + user.getLoginName()));
-        }
+    public void goBackToRoot(ActionEvent actionEvent) throws IOException {
+        loadMainWindow(currentUser);
     }
-*/
+
     public void editName(ActionEvent actionEvent) {
         nameTextField.setEditable(true);
         nameConfirmBtn.setDisable(false);
@@ -234,7 +237,7 @@ public class UserManagementFormController implements Initializable {
 
     public void editPhone(ActionEvent actionEvent) {
         phoneTextField.setEditable(true);
-        passwordConfirmBtn.setDisable(false);
+        phoneConfirmBtn.setDisable(false);
     }
 
     public void confirmPhone(ActionEvent actionEvent) {
@@ -242,4 +245,6 @@ public class UserManagementFormController implements Initializable {
         phoneTextField.setEditable(false);
         phoneConfirmBtn.setDisable(true);
     }
+
+
 }
