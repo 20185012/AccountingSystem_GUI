@@ -143,7 +143,7 @@ public class LoginPageController implements Initializable {
         }
         else
         {
-            registerPrompt.setText("Required data is missing. Marked with red");
+            registerPrompt.setText("Required data is missing.");
             registerPrompt.setTextFill(Color.RED);
             registerPrompt.setVisible(true);
         }
@@ -164,7 +164,7 @@ public class LoginPageController implements Initializable {
             isNotEmpty = false;
         }
 
-        if (usernameRegisterRequired.getText().equals(""))
+        if (usernameTextFieldRegister.getText().equals(""))
         {
             usernameRegisterRequired.setVisible(true);
             isNotEmpty = false;
