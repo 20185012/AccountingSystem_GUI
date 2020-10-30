@@ -74,6 +74,8 @@ public class CategoryManagementFormController implements Initializable {
         categoryNameLabel.setText(currentCategory.getCategoryName());
     }
 
+
+
     private void populateResponsibleUsersList() {
         currentCategory.
                 getResponsibleUsers().
@@ -133,7 +135,7 @@ public class CategoryManagementFormController implements Initializable {
         CategoryManagementFormController categoryManagementFormController = loader.getController();
 
 
-        categoryManagementFormController.setCurrentCategory(getSelectedCategory(categoryList.getSelectionModel(),currentCategory.getSubCategories()), user);
+        categoryManagementFormController.setCurrentCategory(getSelectedCategory(categoryList.getSelectionModel().getSelectedItem(),currentCategory.getSubCategories()), user);
 
         categoryManagementFormController.setUser(user);
 

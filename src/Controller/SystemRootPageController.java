@@ -16,8 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import static Utils.CategoryUtils.accessLastCategory;
-import static Utils.CategoryUtils.getSelectedCategory;
+import static Utils.CategoryUtils.*;
 
 public class SystemRootPageController implements Initializable {
 
@@ -42,6 +41,11 @@ public class SystemRootPageController implements Initializable {
         setUser(user);
         populateRootCategoriesListWithData();
         populateUsersList();
+
+        populateLabels(systemRoot, user);
+    }
+
+    private void populateLabels(SystemRoot systemRoot, User user) {
         systemCreatedLabel.setText("System created: \n" + systemRoot.getSystemInitialDate().toString());
         systemNameLabel.setText(systemRoot.getCompanyName());
         currentUserLabel.setText("Current user: " + user.getName());
@@ -68,22 +72,22 @@ public class SystemRootPageController implements Initializable {
 
 
     private User getSelectedUser() {
-        String[] userData = allUsersList.getSelectionModel().getSelectedItem().toString().split(": ");
 
-        //for (int i = 0;i<userData.length;i++) System.out.println(userData[i]);
-        User userToShow = systemRoot.getAllUsers().stream().filter(user -> user.getUserID().equals(userData[0])).findFirst().orElse(null);
+        Object selectedUser = allUsersList.getSelectionModel().getSelectedItem();
 
-        return userToShow;
+        if (selectedUser != null) {
+
+            String[] userData = selectedUser.toString().split(": ");
+
+            User userToShow = systemRoot.getAllUsers().stream().filter(user -> user.getUserID().equals(userData[0])).findFirst().orElse(null);
+
+            return userToShow;
+        }
+        return null;
     }
 
     private void populateRootCategoriesListWithData() {
-        systemRoot.
-                getRootCategories().
-                forEach
-                        (category ->
-                                rootCategoriesList.getItems().
-                                        add
-                                                (category.getCategoryName() + ": " + category.getOverallFinances()));
+        populateCategoryList(rootCategoriesList.getItems(), systemRoot.getRootCategories());
     }
 
     @Override
@@ -111,7 +115,6 @@ public class SystemRootPageController implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
         }
-
     }
 
     public void loadSystemInformation(ActionEvent actionEvent) {
@@ -153,8 +156,6 @@ public class SystemRootPageController implements Initializable {
         }
     }
 
-
-
     public void accessSelectedRootCategory(ActionEvent actionEvent) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CategoryManagementForm.fxml"));
@@ -163,7 +164,7 @@ public class SystemRootPageController implements Initializable {
         CategoryManagementFormController categoryManagementFormController = loader.getController();
 
 
-        Category categoryToAccess = getSelectedCategory(rootCategoriesList.getSelectionModel(),systemRoot.getRootCategories());
+        Category categoryToAccess = getSelectedCategory(rootCategoriesList.getSelectionModel().getSelectedItem(),systemRoot.getRootCategories());
 
         if (categoryToAccess != null) {
             categoryManagementFormController.setCurrentCategory(categoryToAccess, user);
